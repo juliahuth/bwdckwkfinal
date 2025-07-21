@@ -1,0 +1,98 @@
+<script>
+  import { onMount } from 'svelte';
+  let sections = [];
+  let observer;
+
+  onMount(() => {
+    observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          entry.target.classList.toggle('visible', entry.isIntersecting);
+        });
+      },
+      { threshold: 0.5 }
+    );
+
+    sections.forEach((section) => {
+      observer.observe(section);
+    });
+  });
+</script>
+
+<style>
+  body {
+    margin: 0;
+    font-family: 'Helvetica Neue', sans-serif;
+    background-color: #ffffff;
+    color: #001f3f;
+  }
+
+  main {
+    width: 100%;
+    overflow-x: hidden;
+  }
+
+  section {
+    min-height: 100vh;
+    padding: 4rem 2rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    transition: opacity 0.6s ease-in-out, transform 0.6s ease-in-out;
+    opacity: 0;
+    transform: translateY(50px);
+  }
+
+  section.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .intro {
+    background-color: #001f3f;
+    color: #fff;
+    text-align: center;
+  }
+
+  .highlight {
+    background-color: #ffe4ec;
+    color: #001f3f;
+  }
+
+  h1, h2 {
+    margin-bottom: 1rem;
+  }
+
+  p {
+    max-width: 600px;
+    margin: 0 auto;
+    line-height: 1.6;
+  }
+</style>
+
+<main>
+  <section bind:this={(el) => sections.push(el)} class="intro">
+    <h1>Is All Education Created Equal?</h1>
+    <p>Scroll to explore the disparities, stories, and solutions in global education.</p>
+  </section>
+
+  <section bind:this={(el) => sections.push(el)} class="highlight">
+    <h2>The Inequality Starts Early</h2>
+    <p>Access to early childhood education varies greatly across socio-economic groups. Children from low-income families often start behind and remain behind.</p>
+  </section>
+
+  <section bind:this={(el) => sections.push(el)}>
+    <h2>Resources Shape Outcomes</h2>
+    <p>Schools in affluent areas often have newer facilities, better technology, and more extracurricular opportunities than schools in underserved communities.</p>
+  </section>
+
+  <section bind:this={(el) => sections.push(el)} class="highlight">
+    <h2>Teachers and Training</h2>
+    <p>Quality education depends on quality teachers. However, underfunded schools struggle to attract and retain experienced educators.</p>
+  </section>
+
+  <section bind:this={(el) => sections.push(el)}>
+    <h2>Solutions for Change</h2>
+    <p>Community support, policy reform, and equitable funding models are essential to bridging the education gap and ensuring all students have a fair chance.</p>
+  </section>
+</main>
